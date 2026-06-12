@@ -15,6 +15,9 @@ output/beat_*
 output/v2_*
 output/v3_*
 
+# Preview renders of the deck (scratch — final PDF is what we keep)
+slides/preview-*.png
+
 # Course materials — never publish
 slide/
 dist-*.pdf
