@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
+.vscode/
+
+frames/
+# Preview / scratch artefacts — but keep the final film
+output/smoke.mp4
+output/preview_*.mp4
+output/*.gif
+output/*.png
+output/beat_*
+output/v2_*
+output/v3_*
+
+# Course materials — never publish
+slide/
+dist-*.pdf

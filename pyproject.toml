@@ -1,0 +1,13 @@
+[project]
+name = "intentional-rescue"
+version = "0.1.0"
+description = "A short animated film where two robots demonstrate Dennett's intentional stance."
+requires-python = ">=3.10"
+dependencies = [
+    "pygame>=2.6",
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "imageio>=2.34",
+    "imageio-ffmpeg>=0.5",
+    "pillow>=10.0",
+]
