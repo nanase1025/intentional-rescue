@@ -73,50 +73,50 @@ def _paint_dot_grid(c: canvas.Canvas, step=48):
 
 
 def _draw_running_header(c: canvas.Canvas, section: str, slide_n: int, total: int):
-    """Tiny chyron-style running head + progress bar at the bottom."""
+    """Chyron-style running head + progress bar at the bottom."""
     # Top-left section label
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 13)
-    c.drawString(MARGIN_X, PAGE_H - 70, section.upper())
+    c.setFont(SANS_MED, 18)
+    c.drawString(MARGIN_X, PAGE_H - 76, section.upper())
 
     # Hairline divider
     c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.7)
-    c.line(MARGIN_X, PAGE_H - 88, PAGE_W - MARGIN_X, PAGE_H - 88)
+    c.setLineWidth(0.9)
+    c.line(MARGIN_X, PAGE_H - 96, PAGE_W - MARGIN_X, PAGE_H - 96)
 
     # Bottom-right progress
-    track_w = 120
+    track_w = 160
     x0 = PAGE_W - MARGIN_X - track_w
-    y = 70
+    y = 66
     c.setStrokeColor(DIM_INK)
-    c.setLineWidth(0.7)
+    c.setLineWidth(0.9)
     c.line(x0, y, x0 + track_w, y)
     if total > 1:
         prog = (slide_n - 1) / (total - 1)
     else:
         prog = 0
     c.setFillColor(HERO)
-    c.circle(x0 + track_w * prog, y, 4, stroke=0, fill=1)
+    c.circle(x0 + track_w * prog, y, 5, stroke=0, fill=1)
 
     # Slide number
-    c.setFont(SANS, 12)
+    c.setFont(SANS, 16)
     c.setFillColor(DIM_INK)
-    c.drawString(MARGIN_X, 70, f"{slide_n:02d} / {total:02d}")
+    c.drawString(MARGIN_X, 60, f"{slide_n:02d} / {total:02d}")
 
 
-def _title(c: canvas.Canvas, text: str, y=PAGE_H - 200, size=68, color=INK):
+def _title(c: canvas.Canvas, text: str, y=PAGE_H - 220, size=84, color=INK):
     c.setFillColor(color)
     c.setFont(SERIF, size)
     c.drawString(MARGIN_X, y, text)
 
 
-def _subtitle(c: canvas.Canvas, text: str, y=PAGE_H - 252, size=20):
+def _subtitle(c: canvas.Canvas, text: str, y=PAGE_H - 280, size=26):
     c.setFillColor(DIM_INK)
     c.setFont(SANS_MED, size)
     c.drawString(MARGIN_X, y, text.upper())
 
 
-def _body(c: canvas.Canvas, text: str, y, size=22, color=INK,
+def _body(c: canvas.Canvas, text: str, y, size=32, color=INK,
           font=None, leading=None, x=MARGIN_X):
     if font is None:
         font = SERIF
@@ -130,8 +130,8 @@ def _body(c: canvas.Canvas, text: str, y, size=22, color=INK,
     return y
 
 
-def _bullet(c: canvas.Canvas, text: str, y, size=22, color=INK,
-            font=None, x=MARGIN_X, indent=28):
+def _bullet(c: canvas.Canvas, text: str, y, size=32, color=INK,
+            font=None, x=MARGIN_X, indent=36):
     if font is None:
         font = SERIF
     c.setFillColor(HERO)
@@ -163,38 +163,38 @@ def slide_title(c, n, total):
     cx = PAGE_W // 2
 
     # Two agent dots flanking title
-    _agent_dot(c, cx - 380, PAGE_H // 2 + 24, radius=18, color=HERO)
-    _agent_dot(c, cx + 380, PAGE_H // 2 + 24, radius=18, color=FRIEND)
+    _agent_dot(c, cx - 440, PAGE_H // 2 + 30, radius=22, color=HERO)
+    _agent_dot(c, cx + 440, PAGE_H // 2 + 30, radius=22, color=FRIEND)
 
     # Title
     c.setFillColor(INK)
-    c.setFont(SERIF, 110)
+    c.setFont(SERIF, 130)
     title = "Intentional Rescue"
-    tw = c.stringWidth(title, SERIF, 110)
-    c.drawString(cx - tw / 2, PAGE_H // 2 + 6, title)
+    tw = c.stringWidth(title, SERIF, 130)
+    c.drawString(cx - tw / 2, PAGE_H // 2 + 4, title)
 
     # Subtitle
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 22)
+    c.setFont(SANS_MED, 28)
     sub = "a study in stance"
-    sw = c.stringWidth(sub.upper(), SANS_MED, 22)
-    c.drawString(cx - sw / 2, PAGE_H // 2 - 50, sub.upper())
+    sw = c.stringWidth(sub.upper(), SANS_MED, 28)
+    c.drawString(cx - sw / 2, PAGE_H // 2 - 70, sub.upper())
 
     # Footer line
     c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.7)
-    c.line(cx - 240, 220, cx + 240, 220)
+    c.setLineWidth(0.9)
+    c.line(cx - 320, 230, cx + 320, 230)
 
     c.setFillColor(DIM_INK)
-    c.setFont(SANS, 16)
+    c.setFont(SANS_MED, 20)
     footer = "1st report — design of physically grounded communication system"
-    fw = c.stringWidth(footer.upper(), SANS, 16)
-    c.drawString(cx - fw / 2, 180, footer.upper())
+    fw = c.stringWidth(footer.upper(), SANS_MED, 20)
+    c.drawString(cx - fw / 2, 184, footer.upper())
 
-    c.setFont(SANS, 14)
+    c.setFont(SANS, 20)
     author = "Hairong Shi  ·  Keio University  ·  Spring 2026"
-    aw = c.stringWidth(author, SANS, 14)
-    c.drawString(cx - aw / 2, 140, author)
+    aw = c.stringWidth(author, SANS, 20)
+    c.drawString(cx - aw / 2, 138, author)
 
 
 def slide_first_viewing(c, n, total):
@@ -202,18 +202,18 @@ def slide_first_viewing(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "first viewing", n, total)
 
-    _title(c, "Play the film first.", y=PAGE_H - 280, size=80)
-    _subtitle(c, "No explanation. Let the room read it.", y=PAGE_H - 360)
+    _title(c, "Play the film first.", y=PAGE_H - 300, size=96)
+    _subtitle(c, "No explanation. Let the room read it.", y=PAGE_H - 380, size=28)
 
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 24)
-    note = ("75 seconds. Two robots. A wall. We attribute intention to the\n"
-            "shapes before any commentary; that attribution is the subject\n"
-            "of this talk.")
-    y = PAGE_H - 460
+    c.setFont(SERIF, 34)
+    note = ("75 seconds. Two robots. A wall.\n"
+            "We attribute intention to the shapes before any\n"
+            "commentary — that attribution is the subject of the talk.")
+    y = PAGE_H - 500
     for line in note.split("\n"):
         c.drawString(MARGIN_X, y, line)
-        y -= 38
+        y -= 52
 
 
 def slide_cover_story(c, n, total):
@@ -221,10 +221,10 @@ def slide_cover_story(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "cover story", n, total)
 
-    _title(c, "The Rescue.", y=PAGE_H - 280)
-    _subtitle(c, "Two robots, separated. One finds a way back.", y=PAGE_H - 332)
+    _title(c, "The Rescue.", y=PAGE_H - 240)
+    _subtitle(c, "Two robots, separated. One finds a way back.", y=PAGE_H - 310)
 
-    y = PAGE_H - 440
+    y = PAGE_H - 430
     beats = [
         ("Together", "two robots breathe in the same room."),
         ("Separation", "a wall rises. Friend dims. Hero pauses."),
@@ -234,12 +234,12 @@ def slide_cover_story(c, n, total):
     ]
     for label, body in beats:
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 16)
+        c.setFont(SANS_MED, 22)
         c.drawString(MARGIN_X, y, label.upper())
         c.setFillColor(INK)
-        c.setFont(SERIF, 26)
-        c.drawString(MARGIN_X + 230, y, body)
-        y -= 60
+        c.setFont(SERIF, 34)
+        c.drawString(MARGIN_X + 320, y, body)
+        y -= 88
 
 
 def slide_intentional_behaviours(c, n, total):
@@ -247,39 +247,39 @@ def slide_intentional_behaviours(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "intentional behaviours", n, total)
 
-    _title(c, "Six hints, five beats.", y=PAGE_H - 280)
+    _title(c, "Six hints, five beats.", y=PAGE_H - 230, size=72)
     _subtitle(c, "From dist-04, mapped to where the film shows it.",
-              y=PAGE_H - 332)
+              y=PAGE_H - 295)
 
     rows = [
         ("Tries to achieve a goal", "Throughout. Hero moves only toward Friend."),
-        ("Acts consciously", "Beat 3. Hero pauses before moving — the deliberation."),
-        ("Persists; does not give up", "Beat 4. Wall 2 rises; Hero re-plans, does not return."),
+        ("Acts consciously", "Beat 3. Hero pauses before moving."),
+        ("Persists; does not give up", "Beat 4. Wall 2 rises; Hero re-plans."),
         ("Focuses on the main target", "Beat 4. The sparkle drifts past, ignored."),
-        ("Simulates future worlds", "Beat 3. Two ghost paths flicker as candidate futures."),
-        ("Models the other agent / self", "Throughout. Plan is computed against Friend's pose."),
+        ("Simulates future worlds", "Beat 3. Two ghost paths flicker."),
+        ("Models other agent / self", "Throughout. Plan is against Friend's pose."),
     ]
 
-    y = PAGE_H - 440
+    y = PAGE_H - 410
     col1 = MARGIN_X
-    col2 = MARGIN_X + 600
+    col2 = MARGIN_X + 720
     # column headers
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 14)
-    c.drawString(col1, y + 36, "INTENTION HINT")
-    c.drawString(col2, y + 36, "WHERE IT APPEARS")
+    c.setFont(SANS_MED, 18)
+    c.drawString(col1, y + 44, "INTENTION HINT")
+    c.drawString(col2, y + 44, "WHERE IT APPEARS")
     c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.7)
-    c.line(col1, y + 24, PAGE_W - MARGIN_X, y + 24)
+    c.setLineWidth(0.9)
+    c.line(col1, y + 28, PAGE_W - MARGIN_X, y + 28)
 
     for hint, where in rows:
         c.setFillColor(INK)
-        c.setFont(SERIF_BOLD, 22)
+        c.setFont(SERIF_BOLD, 28)
         c.drawString(col1, y, hint)
         c.setFillColor(INK)
-        c.setFont(SERIF, 22)
+        c.setFont(SERIF, 28)
         c.drawString(col2, y, where)
-        y -= 60
+        y -= 78
 
 
 def slide_two_layers(c, n, total):
@@ -287,56 +287,55 @@ def slide_two_layers(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "two readings", n, total)
 
-    _title(c, "Two readings, side by side.", y=PAGE_H - 280)
+    _title(c, "Two readings, side by side.", y=PAGE_H - 230, size=72)
     _subtitle(c, "The viewer attributes; the chyron confirms.",
-              y=PAGE_H - 332)
+              y=PAGE_H - 295)
 
     # Two columns
-    col_w = (PAGE_W - 2 * MARGIN_X - 80) / 2
+    col_w = (PAGE_W - 2 * MARGIN_X - 100) / 2
     left_x = MARGIN_X
-    right_x = MARGIN_X + col_w + 80
-    top_y = PAGE_H - 460
+    right_x = MARGIN_X + col_w + 100
+    top_y = PAGE_H - 410
 
     def col(title, body, x, accent_color):
         c.setFillColor(accent_color)
-        c.setFont(SANS_MED, 14)
-        c.drawString(x, top_y + 36, title.upper())
+        c.setFont(SANS_MED, 20)
+        c.drawString(x, top_y + 44, title.upper())
         c.setStrokeColor(accent_color)
-        c.setLineWidth(1.4)
-        c.line(x, top_y + 22, x + 70, top_y + 22)
+        c.setLineWidth(1.8)
+        c.line(x, top_y + 26, x + 100, top_y + 26)
         c.setFillColor(INK)
-        c.setFont(SERIF, 22)
-        yy = top_y - 16
+        c.setFont(SERIF, 28)
+        yy = top_y - 24
         for line in body.split("\n"):
             c.drawString(x, yy, line)
-            yy -= 36
+            yy -= 46
         return yy
 
     col("External — intentional stance",
-        "The viewer sees coloured discs\n"
-        "and tells the story: she got\n"
-        "hurt, he is going around the\n"
-        "wall to reach her.\n\n"
+        "The viewer sees discs\n"
+        "and tells a story: she\n"
+        "got hurt, he is going\n"
+        "around to reach her.\n\n"
         "Heider & Simmel, 1944.\n"
         "Dennett, 1971.",
         left_x, HERO)
     col("Internal — belief / desire / plan",
-        "A documentary chyron exposes\n"
-        "what the agent holds:\n"
-        "  belief: friend is on the other side\n"
+        "A chyron exposes what\n"
+        "the agent holds:\n"
+        "  belief: friend is across\n"
         "  desire: reach the friend\n"
         "  plan: go above\n\n"
-        "Baker et al., 2017.\n"
-        "Cohen & Levesque, 1990.",
+        "Baker et al., 2017.",
         right_x, FRIEND)
 
     # Bottom: the alignment claim
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 22)
-    c.drawString(MARGIN_X, 180,
-                 "The point is the alignment: each beat the chyron names,")
-    c.drawString(MARGIN_X, 152,
-                 "the viewer's reading also names.")
+    c.setFont(SERIF, 26)
+    c.drawString(MARGIN_X, 170,
+                 "The point is the alignment:")
+    c.drawString(MARGIN_X, 130,
+                 "what the chyron names, the viewer's reading also names.")
 
 
 def slide_method(c, n, total):
@@ -344,29 +343,29 @@ def slide_method(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "method", n, total)
 
-    _title(c, "How the film was made.", y=PAGE_H - 280)
+    _title(c, "How the film was made.", y=PAGE_H - 230, size=72)
     _subtitle(c, "Frames generated programmatically — no screen recording.",
-              y=PAGE_H - 332)
+              y=PAGE_H - 295)
 
-    y = PAGE_H - 460
+    y = PAGE_H - 420
     items = [
-        ("Pygame", "anti-aliased discs and lines on an alpha layer."),
-        ("NumPy / SciPy", "post-processing: soft bloom (gaussian highlights),\nmotion trails (alpha-decayed accumulator), paper grain."),
-        ("imageio-ffmpeg", "streams frames to mp4 — 75 s at 30 fps, 1280×720."),
-        ("Typography", "Charter (serif) + Avenir Next (sans, small caps for labels).\nThis deck and the film share the same palette and faces."),
+        ("Pygame", "anti-aliased discs and lines."),
+        ("NumPy / SciPy", "bloom, motion trails, paper grain."),
+        ("imageio-ffmpeg", "streams frames to mp4 — 75 s at 30 fps."),
+        ("Typography", "Charter + Avenir Next (deck and film share the same faces)."),
         ("Code", "github.com/nanase1025/intentional-rescue"),
     ]
     for label, body in items:
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 16)
+        c.setFont(SANS_MED, 22)
         c.drawString(MARGIN_X, y, label.upper())
         c.setFillColor(INK)
-        c.setFont(SERIF, 22)
+        c.setFont(SERIF, 30)
         yy = y
         for line in body.split("\n"):
-            c.drawString(MARGIN_X + 280, yy, line)
-            yy -= 32
-        y = yy - 28
+            c.drawString(MARGIN_X + 380, yy, line)
+            yy -= 44
+        y = yy - 48
 
 
 def slide_evaluate(c, n, total):
@@ -374,37 +373,36 @@ def slide_evaluate(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "evaluate me on", n, total)
 
-    _title(c, "What I would like evaluated.", y=PAGE_H - 280)
-    _subtitle(c, "Three angles, in order of importance.", y=PAGE_H - 332)
+    _title(c, "What I would like evaluated.", y=PAGE_H - 230, size=68)
+    _subtitle(c, "Three angles, in order of importance.", y=PAGE_H - 295)
 
     items = [
         ("Alignment.",
-         "Does the external reading you produced while watching\n"
+         "Does your external reading\n"
          "agree with the BDI chyron at each beat?"),
         ("Restraint.",
-         "Intention is conveyed without faces, language,\n"
-         "or scored music. Is the attribution still robust?"),
+         "Intention is conveyed without faces,\n"
+         "language, or scored music."),
         ("Scope.",
-         "I deliberately stop at goal-directed individual action.\n"
-         "Communication and joint attention are out of frame.\n"
-         "Is that scope the right scope for the first task?"),
+         "I stop at goal-directed individual action.\n"
+         "Communication is deliberately out of frame."),
     ]
 
-    y = PAGE_H - 460
+    y = PAGE_H - 410
     for i, (head, body) in enumerate(items, 1):
         c.setFillColor(HERO)
-        c.setFont(SERIF_BOLD, 32)
+        c.setFont(SERIF_BOLD, 42)
         c.drawString(MARGIN_X, y, f"{i}.")
         c.setFillColor(INK)
-        c.setFont(SERIF_BOLD, 30)
-        c.drawString(MARGIN_X + 50, y, head)
-        yy = y - 44
+        c.setFont(SERIF_BOLD, 40)
+        c.drawString(MARGIN_X + 70, y, head)
+        yy = y - 56
         c.setFillColor(DIM_INK)
-        c.setFont(SERIF, 22)
+        c.setFont(SERIF, 30)
         for line in body.split("\n"):
-            c.drawString(MARGIN_X + 50, yy, line)
-            yy -= 32
-        y = yy - 28
+            c.drawString(MARGIN_X + 70, yy, line)
+            yy -= 42
+        y = yy - 36
 
 
 def slide_scope(c, n, total):
@@ -412,25 +410,29 @@ def slide_scope(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "scope", n, total)
 
-    _title(c, "What the film does not show.", y=PAGE_H - 280)
+    _title(c, "What the film does not show.", y=PAGE_H - 230, size=68)
     _subtitle(c, "Drawing the perimeter is part of the design.",
-              y=PAGE_H - 332)
+              y=PAGE_H - 295)
 
     out = [
-        ("No communication.", "joint attention and communicative intention sit later in the course."),
-        ("No Bayesian inference.", "the chyron uses BToM vocabulary; the agent is a finite plan."),
-        ("No nested mentalising.", "Hero models the Friend's pose, not the Friend's mind."),
-        ("No physical grounding.", "no sensors, no actuators — a thought-experiment, not a robot."),
+        ("No communication.",
+         "joint attention sits later in the course."),
+        ("No Bayesian inference.",
+         "the agent is a finite plan, not a posterior."),
+        ("No nested mentalising.",
+         "Hero models the Friend's pose, not mind."),
+        ("No physical grounding.",
+         "no sensors — a thought-experiment, not a robot."),
     ]
-    y = PAGE_H - 470
+    y = PAGE_H - 410
     for head, body in out:
         c.setFillColor(INK)
-        c.setFont(SERIF_BOLD, 26)
+        c.setFont(SERIF_BOLD, 34)
         c.drawString(MARGIN_X, y, head)
         c.setFillColor(DIM_INK)
-        c.setFont(SERIF, 22)
-        c.drawString(MARGIN_X + 360, y, body)
-        y -= 70
+        c.setFont(SERIF, 28)
+        c.drawString(MARGIN_X, y - 46, body)
+        y -= 110
 
 
 def slide_second_viewing(c, n, total):
@@ -438,18 +440,18 @@ def slide_second_viewing(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "second viewing", n, total)
 
-    _title(c, "Watch it again.", y=PAGE_H - 280, size=80)
-    _subtitle(c, "Now the labels are in your head.", y=PAGE_H - 360)
+    _title(c, "Watch it again.", y=PAGE_H - 300, size=96)
+    _subtitle(c, "Now the labels are in your head.", y=PAGE_H - 380, size=28)
 
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 24)
-    note = ("The same 75 seconds. The same shapes. The reading shifts\n"
-            "because the chyron has tied each attribution to a belief,\n"
-            "desire, or plan.")
-    y = PAGE_H - 460
+    c.setFont(SERIF, 34)
+    note = ("Same 75 seconds. Same shapes.\n"
+            "The reading shifts — each attribution\n"
+            "is now tied to a belief, desire, or plan.")
+    y = PAGE_H - 500
     for line in note.split("\n"):
         c.drawString(MARGIN_X, y, line)
-        y -= 38
+        y -= 52
 
 
 def slide_references(c, n, total):
@@ -457,31 +459,31 @@ def slide_references(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "references", n, total)
 
-    _title(c, "Reading behind the film.", y=PAGE_H - 280)
-    _subtitle(c, "All on the syllabus.", y=PAGE_H - 332)
+    _title(c, "Reading behind the film.", y=PAGE_H - 230, size=68)
+    _subtitle(c, "All on the syllabus.", y=PAGE_H - 295)
 
     refs = [
-        "Dennett, D.  Intentional Systems.  J. Phil. 68, 1971.",
-        "Cohen, P. & Levesque, H.  Intention is Choice with Commitment.",
-        "    Artificial Intelligence 42, 1990.",
-        "Baker, C. L., Jara-Ettinger, J., Saxe, R., Tenenbaum, J.",
-        "    Rational quantitative attribution of beliefs, desires and",
-        "    percepts in human mentalizing.  Nat. Hum. Behav. 1, 64, 2017.",
-        "Heider, F. & Simmel, M.  An Experimental Study of Apparent",
-        "    Behavior.  Am. J. Psych. 57, 1944.",
-        "Epley, N., Waytz, A., Cacioppo, J.  On Seeing Human.",
-        "    Psychological Review 114, 2007.",
+        "Dennett.  Intentional Systems.  J. Phil. 68, 1971.",
+        "Cohen & Levesque.  Intention is Choice with",
+        "    Commitment.  Artif. Intell. 42, 1990.",
+        "Baker, Jara-Ettinger, Saxe & Tenenbaum.",
+        "    Rational quantitative attribution of beliefs,",
+        "    desires and percepts.  Nat. Hum. Behav. 1, 2017.",
+        "Heider & Simmel.  Apparent Behavior.",
+        "    Am. J. Psych. 57, 1944.",
+        "Epley, Waytz & Cacioppo.  On Seeing Human.",
+        "    Psych. Review 114, 2007.",
     ]
-    y = PAGE_H - 460
+    y = PAGE_H - 400
     c.setFillColor(INK)
-    c.setFont(SERIF, 22)
+    c.setFont(SERIF, 28)
     for line in refs:
         c.drawString(MARGIN_X, y, line)
-        y -= 38
+        y -= 46
 
-    # tiny thank-you
+    # thank-you
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 14)
+    c.setFont(SANS_MED, 22)
     c.drawString(MARGIN_X, 160, "THANK YOU.")
 
 
