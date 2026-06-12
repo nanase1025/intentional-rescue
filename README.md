@@ -18,6 +18,8 @@ This project takes the brief through the lens of Dennett's three stances — phy
 
 The viewer naturally attributes intention from the outside (the intentional stance); a low-key chyron exposes the underlying belief / desire / plan so both layers can be read together.
 
+A longer reading of the film — beat-by-beat mapping to Imai's intention hints, Dennett's three stances, and BToM — is in [`docs/CONCEPT.md`](docs/CONCEPT.md).
+
 ## Visual language
 
 | | |
