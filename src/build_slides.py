@@ -153,6 +153,35 @@ def _agent_dot(c: canvas.Canvas, x, y, radius=14, color=HERO, halo=True):
     c.circle(x, y, radius, stroke=0, fill=1)
 
 
+# ---- Assets ---------------------------------------------------------------
+ASSETS = "slides/assets"
+FRAMES = {
+    "opening":      f"{ASSETS}/frames/opening.png",
+    "together":     f"{ASSETS}/frames/b1_together.png",
+    "separation":   f"{ASSETS}/frames/b2_separation.png",
+    "deliberation": f"{ASSETS}/frames/b3_deliberation.png",
+    "journey":      f"{ASSETS}/frames/b4_journey.png",
+    "reunion":      f"{ASSETS}/frames/b5_reunion.png",
+    "chyron":       f"{ASSETS}/frames/chyron.png",
+}
+LOGOS = {
+    "python": f"{ASSETS}/logos/python.png",
+    "numpy":  f"{ASSETS}/logos/numpy.png",
+    "scipy":  f"{ASSETS}/logos/scipy.png",
+    "ffmpeg": f"{ASSETS}/logos/ffmpeg.png",
+    "github": f"{ASSETS}/logos/github.png",
+}
+
+
+def _framed_image(c, path, x, y, w, h, border=True):
+    """Place a film frame with a thin hairline border."""
+    c.drawImage(path, x, y, width=w, height=h, mask="auto")
+    if border:
+        c.setStrokeColor(HAIRLINE)
+        c.setLineWidth(0.9)
+        c.rect(x, y, w, h, stroke=1, fill=0)
+
+
 # ===========================================================================
 # Slide contents
 # ===========================================================================
@@ -202,18 +231,20 @@ def slide_first_viewing(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "first viewing", n, total)
 
-    _title(c, "Play the film first.", y=PAGE_H - 300, size=96)
-    _subtitle(c, "No explanation. Let the room read it.", y=PAGE_H - 380, size=28)
+    _title(c, "Play the film first.", y=PAGE_H - 220, size=80)
 
+    # Hero frame, centred
+    w, h = 960, 540
+    fx = (PAGE_W - w) // 2
+    fy = PAGE_H - 240 - h
+    _framed_image(c, FRAMES["opening"], fx, fy, w, h)
+
+    # Caption underneath
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 34)
-    note = ("75 seconds. Two robots. A wall.\n"
-            "We attribute intention to the shapes before any\n"
-            "commentary — that attribution is the subject of the talk.")
-    y = PAGE_H - 500
-    for line in note.split("\n"):
-        c.drawString(MARGIN_X, y, line)
-        y -= 52
+    c.setFont(SERIF, 26)
+    caption = "75 seconds. Two robots. A wall."
+    cw = c.stringWidth(caption, SERIF, 26)
+    c.drawString((PAGE_W - cw) // 2, fy - 50, caption)
 
 
 def slide_cover_story(c, n, total):
@@ -221,25 +252,37 @@ def slide_cover_story(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "cover story", n, total)
 
-    _title(c, "The Rescue.", y=PAGE_H - 240)
-    _subtitle(c, "Two robots, separated. One finds a way back.", y=PAGE_H - 310)
+    _title(c, "The Rescue.", y=PAGE_H - 220, size=72)
+    _subtitle(c, "Two robots, separated. One finds a way back.", y=PAGE_H - 280)
 
-    y = PAGE_H - 430
     beats = [
-        ("Together", "two robots breathe in the same room."),
-        ("Separation", "a wall rises. Friend dims. Hero pauses."),
-        ("Deliberation", "Hero considers two possible futures."),
-        ("Journey", "Hero ignores a sparkle, re-routes around a new wall."),
-        ("Reunion", "Hero arrives. Friend brightens. They breathe together."),
+        ("Together",     FRAMES["together"],     "two robots breathe in the same room."),
+        ("Separation",   FRAMES["separation"],   "a wall rises. Friend dims. Hero pauses."),
+        ("Deliberation", FRAMES["deliberation"], "Hero considers two possible futures."),
+        ("Journey",      FRAMES["journey"],      "Hero re-routes around a new wall."),
+        ("Reunion",      FRAMES["reunion"],      "Hero arrives. They breathe together."),
     ]
-    for label, body in beats:
+
+    # 5 rows, each ~120 tall: label (left, 200) + thumb 256x144 + body
+    y = PAGE_H - 450
+    row_h = 128
+    thumb_w, thumb_h = 240, 135
+    label_x = MARGIN_X
+    thumb_x = MARGIN_X + 240
+    body_x = thumb_x + thumb_w + 40
+
+    for label, framepath, body in beats:
+        # label small caps
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 22)
-        c.drawString(MARGIN_X, y, label.upper())
+        c.setFont(SANS_MED, 20)
+        c.drawString(label_x, y + 50, label.upper())
+        # thumbnail
+        _framed_image(c, framepath, thumb_x, y - 24, thumb_w, thumb_h)
+        # body
         c.setFillColor(INK)
-        c.setFont(SERIF, 34)
-        c.drawString(MARGIN_X + 320, y, body)
-        y -= 88
+        c.setFont(SERIF, 28)
+        c.drawString(body_x, y + 48, body)
+        y -= row_h
 
 
 def slide_intentional_behaviours(c, n, total):
@@ -247,39 +290,39 @@ def slide_intentional_behaviours(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "intentional behaviours", n, total)
 
-    _title(c, "Six hints, five beats.", y=PAGE_H - 230, size=72)
+    _title(c, "Six hints, three beats.", y=PAGE_H - 220, size=66)
     _subtitle(c, "From dist-04, mapped to where the film shows it.",
-              y=PAGE_H - 295)
+              y=PAGE_H - 280)
 
-    rows = [
-        ("Tries to achieve a goal", "Throughout. Hero moves only toward Friend."),
-        ("Acts consciously", "Beat 3. Hero pauses before moving."),
-        ("Persists; does not give up", "Beat 4. Wall 2 rises; Hero re-plans."),
-        ("Focuses on the main target", "Beat 4. The sparkle drifts past, ignored."),
-        ("Simulates future worlds", "Beat 3. Two ghost paths flicker."),
-        ("Models other agent / self", "Throughout. Plan is against Friend's pose."),
+    groups = [
+        ("Throughout", FRAMES["together"],
+         ["Tries to achieve a goal",
+          "Models the other agent / self"]),
+        ("Beat 3 — Deliberation", FRAMES["deliberation"],
+         ["Acts consciously",
+          "Simulates future worlds"]),
+        ("Beat 4 — Journey", FRAMES["journey"],
+         ["Persists; does not give up",
+          "Focuses on the main target"]),
     ]
 
-    y = PAGE_H - 410
-    col1 = MARGIN_X
-    col2 = MARGIN_X + 720
-    # column headers
-    c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 18)
-    c.drawString(col1, y + 44, "INTENTION HINT")
-    c.drawString(col2, y + 44, "WHERE IT APPEARS")
-    c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.9)
-    c.line(col1, y + 28, PAGE_W - MARGIN_X, y + 28)
+    thumb_w, thumb_h = 320, 180
+    row_h = 200
+    y = PAGE_H - 370
 
-    for hint, where in rows:
-        c.setFillColor(INK)
-        c.setFont(SERIF_BOLD, 28)
-        c.drawString(col1, y, hint)
+    for label, framepath, hints in groups:
+        # thumbnail on the left
+        _framed_image(c, framepath, MARGIN_X, y - thumb_h + 14, thumb_w, thumb_h)
+        # right column: small-caps label and 2 hints
+        rx = MARGIN_X + thumb_w + 60
+        c.setFillColor(HERO)
+        c.setFont(SANS_MED, 20)
+        c.drawString(rx, y - 14, label.upper())
         c.setFillColor(INK)
         c.setFont(SERIF, 28)
-        c.drawString(col2, y, where)
-        y -= 78
+        c.drawString(rx, y - 72, "·  " + hints[0])
+        c.drawString(rx, y - 118, "·  " + hints[1])
+        y -= row_h
 
 
 def slide_two_layers(c, n, total):
@@ -287,55 +330,59 @@ def slide_two_layers(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "two readings", n, total)
 
-    _title(c, "Two readings, side by side.", y=PAGE_H - 230, size=72)
+    _title(c, "Two readings, side by side.", y=PAGE_H - 220, size=64)
     _subtitle(c, "The viewer attributes; the chyron confirms.",
-              y=PAGE_H - 295)
+              y=PAGE_H - 275)
 
-    # Two columns
-    col_w = (PAGE_W - 2 * MARGIN_X - 100) / 2
-    left_x = MARGIN_X
-    right_x = MARGIN_X + col_w + 100
-    top_y = PAGE_H - 410
-
-    def col(title, body, x, accent_color):
-        c.setFillColor(accent_color)
-        c.setFont(SANS_MED, 20)
-        c.drawString(x, top_y + 44, title.upper())
-        c.setStrokeColor(accent_color)
-        c.setLineWidth(1.8)
-        c.line(x, top_y + 26, x + 100, top_y + 26)
-        c.setFillColor(INK)
-        c.setFont(SERIF, 28)
-        yy = top_y - 24
-        for line in body.split("\n"):
-            c.drawString(x, yy, line)
-            yy -= 46
-        return yy
-
-    col("External — intentional stance",
-        "The viewer sees discs\n"
-        "and tells a story: she\n"
-        "got hurt, he is going\n"
-        "around to reach her.\n\n"
-        "Heider & Simmel, 1944.\n"
-        "Dennett, 1971.",
-        left_x, HERO)
-    col("Internal — belief / desire / plan",
-        "A chyron exposes what\n"
-        "the agent holds:\n"
-        "  belief: friend is across\n"
-        "  desire: reach the friend\n"
-        "  plan: go above\n\n"
-        "Baker et al., 2017.",
-        right_x, FRIEND)
-
-    # Bottom: the alignment claim
+    # Frame with chyron visible — left side, evidence of what we mean
+    fw, fh = 720, 405
+    fx = MARGIN_X
+    fy = PAGE_H - 760
+    _framed_image(c, FRAMES["deliberation"], fx, fy, fw, fh)
     c.setFillColor(DIM_INK)
+    c.setFont(SANS_MED, 16)
+    c.drawString(fx, fy - 32, "BEAT 3 — CHYRON READS “DESIRE: REACH THE FRIEND”")
+
+    # Two short columns to the right
+    col_x = MARGIN_X + fw + 80
+    top_y = PAGE_H - 360
+
+    c.setFillColor(HERO)
+    c.setFont(SANS_MED, 20)
+    c.drawString(col_x, top_y, "EXTERNAL — INTENTIONAL STANCE")
+    c.setStrokeColor(HERO)
+    c.setLineWidth(1.8)
+    c.line(col_x, top_y - 14, col_x + 110, top_y - 14)
+    c.setFillColor(INK)
     c.setFont(SERIF, 26)
-    c.drawString(MARGIN_X, 170,
-                 "The point is the alignment:")
-    c.drawString(MARGIN_X, 130,
-                 "what the chyron names, the viewer's reading also names.")
+    for i, line in enumerate([
+        "The viewer sees discs and tells",
+        "a story: she got hurt, he is",
+        "going around to reach her.",
+    ]):
+        c.drawString(col_x, top_y - 50 - i * 38, line)
+    c.setFillColor(DIM_INK)
+    c.setFont(SERIF, 22)
+    c.drawString(col_x, top_y - 180, "Heider & Simmel 1944 · Dennett 1971.")
+
+    top2 = top_y - 250
+    c.setFillColor(FRIEND)
+    c.setFont(SANS_MED, 20)
+    c.drawString(col_x, top2, "INTERNAL — BELIEF / DESIRE / PLAN")
+    c.setStrokeColor(FRIEND)
+    c.setLineWidth(1.8)
+    c.line(col_x, top2 - 14, col_x + 110, top2 - 14)
+    c.setFillColor(INK)
+    c.setFont(SERIF, 26)
+    for i, line in enumerate([
+        "The chyron exposes what",
+        "the agent holds: belief, desire,",
+        "and the committed plan.",
+    ]):
+        c.drawString(col_x, top2 - 50 - i * 38, line)
+    c.setFillColor(DIM_INK)
+    c.setFont(SERIF, 22)
+    c.drawString(col_x, top2 - 180, "Baker et al. 2017 · Cohen & Levesque 1990.")
 
 
 def slide_method(c, n, total):
@@ -343,29 +390,35 @@ def slide_method(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "method", n, total)
 
-    _title(c, "How the film was made.", y=PAGE_H - 230, size=72)
+    _title(c, "How the film was made.", y=PAGE_H - 220, size=66)
     _subtitle(c, "Frames generated programmatically — no screen recording.",
-              y=PAGE_H - 295)
+              y=PAGE_H - 280)
 
-    y = PAGE_H - 420
+    # Each row: [logo 64x64] LABEL  body
     items = [
-        ("Pygame", "anti-aliased discs and lines."),
-        ("NumPy / SciPy", "bloom, motion trails, paper grain."),
-        ("imageio-ffmpeg", "streams frames to mp4 — 75 s at 30 fps."),
-        ("Typography", "Charter + Avenir Next (deck and film share the same faces)."),
-        ("Code", "github.com/nanase1025/intentional-rescue"),
+        (LOGOS["python"], "Pygame",         "anti-aliased discs and lines on an alpha layer."),
+        (LOGOS["numpy"],  "NumPy + SciPy",  "bloom, motion trails, paper grain."),
+        (LOGOS["ffmpeg"], "imageio-ffmpeg", "streams frames to mp4 — 75 s at 30 fps."),
+        (None,            "Typography",     "Charter + Avenir Next — deck and film share the faces."),
+        (LOGOS["github"], "Code",           "github.com/nanase1025/intentional-rescue"),
     ]
-    for label, body in items:
+    logo_size = 56
+    label_x = MARGIN_X + logo_size + 32
+    body_x = MARGIN_X + 460
+    y = PAGE_H - 400
+    row_h = 110
+
+    for logo, label, body in items:
+        if logo is not None:
+            c.drawImage(logo, MARGIN_X, y - logo_size + 14,
+                        width=logo_size, height=logo_size, mask="auto")
         c.setFillColor(HERO)
         c.setFont(SANS_MED, 22)
-        c.drawString(MARGIN_X, y, label.upper())
+        c.drawString(label_x, y, label.upper())
         c.setFillColor(INK)
-        c.setFont(SERIF, 30)
-        yy = y
-        for line in body.split("\n"):
-            c.drawString(MARGIN_X + 380, yy, line)
-            yy -= 44
-        y = yy - 48
+        c.setFont(SERIF, 28)
+        c.drawString(body_x, y, body)
+        y -= row_h
 
 
 def slide_evaluate(c, n, total):
@@ -384,8 +437,8 @@ def slide_evaluate(c, n, total):
          "Intention is conveyed without faces,\n"
          "language, or scored music."),
         ("Scope.",
-         "I stop at goal-directed individual action.\n"
-         "Communication is deliberately out of frame."),
+         "Goal-directed individual action only —\n"
+         "no communication, no Bayesian inference."),
     ]
 
     y = PAGE_H - 410
@@ -440,18 +493,20 @@ def slide_second_viewing(c, n, total):
     _paint_dot_grid(c)
     _draw_running_header(c, "second viewing", n, total)
 
-    _title(c, "Watch it again.", y=PAGE_H - 300, size=96)
-    _subtitle(c, "Now the labels are in your head.", y=PAGE_H - 380, size=28)
+    _title(c, "The film, again.", y=PAGE_H - 220, size=80)
 
+    # Hero frame — reunion
+    w, h = 960, 540
+    fx = (PAGE_W - w) // 2
+    fy = PAGE_H - 240 - h
+    _framed_image(c, FRAMES["reunion"], fx, fy, w, h)
+
+    # Caption underneath
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 34)
-    note = ("Same 75 seconds. Same shapes.\n"
-            "The reading shifts — each attribution\n"
-            "is now tied to a belief, desire, or plan.")
-    y = PAGE_H - 500
-    for line in note.split("\n"):
-        c.drawString(MARGIN_X, y, line)
-        y -= 52
+    c.setFont(SERIF, 26)
+    caption = "Same 75 seconds — with the BDI vocabulary in mind."
+    cw = c.stringWidth(caption, SERIF, 26)
+    c.drawString((PAGE_W - cw) // 2, fy - 50, caption)
 
 
 def slide_references(c, n, total):
@@ -497,7 +552,6 @@ SLIDES = [
     slide_two_layers,
     slide_method,
     slide_evaluate,
-    slide_scope,
     slide_second_viewing,
     slide_references,
 ]

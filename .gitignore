@@ -5,7 +5,7 @@ __pycache__/
 .idea/
 .vscode/
 
-frames/
+/frames/
 # Preview / scratch artefacts — but keep the final film
 output/smoke.mp4
 output/preview_*.mp4
