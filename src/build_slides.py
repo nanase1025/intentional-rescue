@@ -263,24 +263,24 @@ def slide_cover_story(c, n, total):
         ("Reunion",      FRAMES["reunion"],      "Hero arrives. They breathe together."),
     ]
 
-    # 5 rows, each ~120 tall: label (left, 200) + thumb 256x144 + body
+    # 5 rows: label (left, 240) + thumb 240x135 + body
     y = PAGE_H - 450
     row_h = 128
     thumb_w, thumb_h = 240, 135
     label_x = MARGIN_X
-    thumb_x = MARGIN_X + 240
+    thumb_x = MARGIN_X + 260
     body_x = thumb_x + thumb_w + 40
 
     for label, framepath, body in beats:
         # label small caps
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 20)
+        c.setFont(SANS_MED, 26)
         c.drawString(label_x, y + 50, label.upper())
         # thumbnail
         _framed_image(c, framepath, thumb_x, y - 24, thumb_w, thumb_h)
         # body
         c.setFillColor(INK)
-        c.setFont(SERIF, 28)
+        c.setFont(SERIF, 32)
         c.drawString(body_x, y + 48, body)
         y -= row_h
 
@@ -307,7 +307,7 @@ def slide_intentional_behaviours(c, n, total):
     ]
 
     thumb_w, thumb_h = 320, 180
-    row_h = 200
+    row_h = 210
     y = PAGE_H - 370
 
     for label, framepath, hints in groups:
@@ -316,12 +316,12 @@ def slide_intentional_behaviours(c, n, total):
         # right column: small-caps label and 2 hints
         rx = MARGIN_X + thumb_w + 60
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 20)
-        c.drawString(rx, y - 14, label.upper())
+        c.setFont(SANS_MED, 26)
+        c.drawString(rx, y - 16, label.upper())
         c.setFillColor(INK)
-        c.setFont(SERIF, 28)
-        c.drawString(rx, y - 72, "·  " + hints[0])
-        c.drawString(rx, y - 118, "·  " + hints[1])
+        c.setFont(SERIF, 32)
+        c.drawString(rx, y - 78, "·  " + hints[0])
+        c.drawString(rx, y - 130, "·  " + hints[1])
         y -= row_h
 
 
@@ -340,49 +340,49 @@ def slide_two_layers(c, n, total):
     fy = PAGE_H - 760
     _framed_image(c, FRAMES["deliberation"], fx, fy, fw, fh)
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 16)
-    c.drawString(fx, fy - 32, "BEAT 3 — CHYRON READS “DESIRE: REACH THE FRIEND”")
+    c.setFont(SANS_MED, 20)
+    c.drawString(fx, fy - 36, "BEAT 3 — CHYRON READS “DESIRE: REACH THE FRIEND”")
 
     # Two short columns to the right
     col_x = MARGIN_X + fw + 80
     top_y = PAGE_H - 360
 
     c.setFillColor(HERO)
-    c.setFont(SANS_MED, 20)
+    c.setFont(SANS_MED, 26)
     c.drawString(col_x, top_y, "EXTERNAL — INTENTIONAL STANCE")
     c.setStrokeColor(HERO)
     c.setLineWidth(1.8)
-    c.line(col_x, top_y - 14, col_x + 110, top_y - 14)
+    c.line(col_x, top_y - 16, col_x + 130, top_y - 16)
     c.setFillColor(INK)
-    c.setFont(SERIF, 26)
+    c.setFont(SERIF, 30)
     for i, line in enumerate([
         "The viewer sees discs and tells",
         "a story: she got hurt, he is",
         "going around to reach her.",
     ]):
-        c.drawString(col_x, top_y - 50 - i * 38, line)
+        c.drawString(col_x, top_y - 58 - i * 44, line)
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 22)
-    c.drawString(col_x, top_y - 180, "Heider & Simmel 1944 · Dennett 1971.")
+    c.setFont(SERIF, 24)
+    c.drawString(col_x, top_y - 208, "Heider & Simmel 1944 · Dennett 1971.")
 
-    top2 = top_y - 250
+    top2 = top_y - 290
     c.setFillColor(FRIEND)
-    c.setFont(SANS_MED, 20)
+    c.setFont(SANS_MED, 26)
     c.drawString(col_x, top2, "INTERNAL — BELIEF / DESIRE / PLAN")
     c.setStrokeColor(FRIEND)
     c.setLineWidth(1.8)
-    c.line(col_x, top2 - 14, col_x + 110, top2 - 14)
+    c.line(col_x, top2 - 16, col_x + 130, top2 - 16)
     c.setFillColor(INK)
-    c.setFont(SERIF, 26)
+    c.setFont(SERIF, 30)
     for i, line in enumerate([
         "The chyron exposes what",
         "the agent holds: belief, desire,",
         "and the committed plan.",
     ]):
-        c.drawString(col_x, top2 - 50 - i * 38, line)
+        c.drawString(col_x, top2 - 58 - i * 44, line)
     c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 22)
-    c.drawString(col_x, top2 - 180, "Baker et al. 2017 · Cohen & Levesque 1990.")
+    c.setFont(SERIF, 24)
+    c.drawString(col_x, top2 - 208, "Baker 2017 · Cohen & Levesque 1990.")
 
 
 def slide_method(c, n, total):
@@ -402,21 +402,21 @@ def slide_method(c, n, total):
         (None,            "Typography",     "Charter + Avenir Next — deck and film share the faces."),
         (LOGOS["github"], "Code",           "github.com/nanase1025/intentional-rescue"),
     ]
-    logo_size = 56
-    label_x = MARGIN_X + logo_size + 32
-    body_x = MARGIN_X + 460
+    logo_size = 64
+    label_x = MARGIN_X + logo_size + 36
+    body_x = MARGIN_X + 500
     y = PAGE_H - 400
     row_h = 110
 
     for logo, label, body in items:
         if logo is not None:
-            c.drawImage(logo, MARGIN_X, y - logo_size + 14,
+            c.drawImage(logo, MARGIN_X, y - logo_size + 16,
                         width=logo_size, height=logo_size, mask="auto")
         c.setFillColor(HERO)
-        c.setFont(SANS_MED, 22)
+        c.setFont(SANS_MED, 26)
         c.drawString(label_x, y, label.upper())
         c.setFillColor(INK)
-        c.setFont(SERIF, 28)
+        c.setFont(SERIF, 32)
         c.drawString(body_x, y, body)
         y -= row_h
 
@@ -496,17 +496,10 @@ def slide_second_viewing(c, n, total):
     _title(c, "The film, again.", y=PAGE_H - 220, size=80)
 
     # Hero frame — reunion
-    w, h = 960, 540
+    w, h = 1040, 585
     fx = (PAGE_W - w) // 2
-    fy = PAGE_H - 240 - h
+    fy = PAGE_H - 250 - h
     _framed_image(c, FRAMES["reunion"], fx, fy, w, h)
-
-    # Caption underneath
-    c.setFillColor(DIM_INK)
-    c.setFont(SERIF, 26)
-    caption = "Same 75 seconds — with the BDI vocabulary in mind."
-    cw = c.stringWidth(caption, SERIF, 26)
-    c.drawString((PAGE_W - cw) // 2, fy - 50, caption)
 
 
 def slide_references(c, n, total):
