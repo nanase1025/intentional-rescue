@@ -200,19 +200,19 @@ def slide_title(c, n, total):
 
     # Footer line
     c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.9)
-    c.line(cx - 320, 230, cx + 320, 230)
+    c.setLineWidth(1.1)
+    c.line(cx - 520, 310, cx + 520, 310)
 
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 20)
+    c.setFont(SANS_MED, 40)
     footer = "1st report — design of physically grounded communication system"
-    fw = c.stringWidth(footer.upper(), SANS_MED, 20)
-    c.drawString(cx - fw / 2, 184, footer.upper())
+    fw = c.stringWidth(footer.upper(), SANS_MED, 40)
+    c.drawString(cx - fw / 2, 230, footer.upper())
 
-    c.setFont(SANS, 20)
+    c.setFont(SANS, 36)
     author = "Hairong Shi  ·  Keio University  ·  Spring 2026"
-    aw = c.stringWidth(author, SANS, 20)
-    c.drawString(cx - aw / 2, 138, author)
+    aw = c.stringWidth(author, SANS, 36)
+    c.drawString(cx - aw / 2, 140, author)
 
 
 def slide_first_viewing(c, n, total):
