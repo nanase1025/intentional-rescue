@@ -389,11 +389,11 @@ def slide_method(c, n, total):
 
     # Each row: [logo 64x64] LABEL  body
     items = [
-        (LOGOS["python"], "Pygame",         "anti-aliased discs and lines on an alpha layer."),
-        (LOGOS["numpy"],  "NumPy + SciPy",  "bloom, motion trails, paper grain."),
-        (LOGOS["ffmpeg"], "imageio-ffmpeg", "streams frames to mp4 — 75 s at 30 fps."),
-        (None,            "Typography",     "Charter + Avenir Next — deck and film share the faces."),
-        (LOGOS["github"], "Code",           "github.com/nanase1025/intentional-rescue"),
+        (LOGOS["python"], "Python + Pygame", "builds the scene and draws every frame."),
+        (LOGOS["numpy"],  "NumPy + SciPy",   "post-processes the frames for the visual style."),
+        (LOGOS["ffmpeg"], "imageio-ffmpeg",  "encodes the frame sequence as the final mp4."),
+        (None,            "Typography",      "Charter + Avenir Next — film and deck share the faces."),
+        (LOGOS["github"], "Code",            "github.com/nanase1025/intentional-rescue"),
     ]
     logo_size = 64
     label_x = MARGIN_X + logo_size + 36
