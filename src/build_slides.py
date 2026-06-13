@@ -334,7 +334,7 @@ def slide_two_layers(c, n, total):
     _framed_image(c, FRAMES["deliberation"], fx, fy, fw, fh)
     c.setFillColor(DIM_INK)
     c.setFont(SANS_MED, 20)
-    c.drawString(fx, fy - 36, "BEAT 3 — CHYRON READS “DESIRE: REACH THE FRIEND”")
+    c.drawString(fx, fy - 36, "BEAT 3 — CAPTION READS “DESIRE: REACH THE FRIEND”")
 
     # Two short columns to the right
     col_x = MARGIN_X + fw + 80
@@ -368,7 +368,7 @@ def slide_two_layers(c, n, total):
     c.setFillColor(INK)
     c.setFont(SERIF, 30)
     for i, line in enumerate([
-        "The chyron exposes what",
+        "The caption exposes what",
         "the agent holds: belief, desire,",
         "and the committed plan.",
     ]):
@@ -425,7 +425,7 @@ def slide_evaluate(c, n, total):
     items = [
         ("Alignment.",
          "Does your external reading\n"
-         "agree with the BDI chyron at each beat?"),
+         "agree with the BDI caption at each beat?"),
         ("Restraint.",
          "Intention is conveyed without faces,\n"
          "language, or scored music."),
