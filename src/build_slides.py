@@ -74,18 +74,18 @@ def _paint_dot_grid(c: canvas.Canvas, step=48):
 
 def _draw_running_header(c: canvas.Canvas, section: str, slide_n: int, total: int):
     """Chyron-style running head + progress bar at the bottom."""
-    # Top-left section label
+    # Top-left section label — large running title
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 18)
-    c.drawString(MARGIN_X, PAGE_H - 76, section.upper())
+    c.setFont(SANS_MED, 36)
+    c.drawString(MARGIN_X, PAGE_H - 96, section.upper())
 
     # Hairline divider
     c.setStrokeColor(HAIRLINE)
-    c.setLineWidth(0.9)
-    c.line(MARGIN_X, PAGE_H - 96, PAGE_W - MARGIN_X, PAGE_H - 96)
+    c.setLineWidth(1.1)
+    c.line(MARGIN_X, PAGE_H - 124, PAGE_W - MARGIN_X, PAGE_H - 124)
 
     # Bottom-right progress
-    track_w = 160
+    track_w = 200
     x0 = PAGE_W - MARGIN_X - track_w
     y = 66
     c.setStrokeColor(DIM_INK)
@@ -96,12 +96,12 @@ def _draw_running_header(c: canvas.Canvas, section: str, slide_n: int, total: in
     else:
         prog = 0
     c.setFillColor(HERO)
-    c.circle(x0 + track_w * prog, y, 5, stroke=0, fill=1)
+    c.circle(x0 + track_w * prog, y, 6, stroke=0, fill=1)
 
     # Slide number
-    c.setFont(SANS, 16)
+    c.setFont(SANS, 22)
     c.setFillColor(DIM_INK)
-    c.drawString(MARGIN_X, 60, f"{slide_n:02d} / {total:02d}")
+    c.drawString(MARGIN_X, 58, f"{slide_n:02d} / {total:02d}")
 
 
 def _title(c: canvas.Canvas, text: str, y=PAGE_H - 220, size=84, color=INK):
