@@ -202,13 +202,6 @@ def slide_title(c, n, total):
     tw = c.stringWidth(title, SERIF, 130)
     c.drawString(cx - tw / 2, PAGE_H // 2 + 4, title)
 
-    # Subtitle
-    c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 28)
-    sub = "a study in stance"
-    sw = c.stringWidth(sub.upper(), SANS_MED, 28)
-    c.drawString(cx - sw / 2, PAGE_H // 2 - 70, sub.upper())
-
     # Footer line
     c.setStrokeColor(HAIRLINE)
     c.setLineWidth(0.9)
