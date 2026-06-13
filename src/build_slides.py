@@ -392,7 +392,6 @@ def slide_method(c, n, total):
         (LOGOS["python"], "Python + Pygame", "builds the scene and draws every frame."),
         (LOGOS["numpy"],  "NumPy + SciPy",   "post-processes the frames for the visual style."),
         (LOGOS["ffmpeg"], "imageio-ffmpeg",  "encodes the frame sequence as the final mp4."),
-        (None,            "Typography",      "Charter + Avenir Next — film and deck share the faces."),
         (LOGOS["github"], "Code",            "github.com/nanase1025/intentional-rescue"),
     ]
     logo_size = 64
