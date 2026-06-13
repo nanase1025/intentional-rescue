@@ -191,10 +191,6 @@ def slide_title(c, n, total):
     _paint_dot_grid(c)
     cx = PAGE_W // 2
 
-    # Two agent dots flanking title
-    _agent_dot(c, cx - 440, PAGE_H // 2 + 30, radius=22, color=HERO)
-    _agent_dot(c, cx + 440, PAGE_H // 2 + 30, radius=22, color=FRIEND)
-
     # Title
     c.setFillColor(INK)
     c.setFont(SERIF, 130)
