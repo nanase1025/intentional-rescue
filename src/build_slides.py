@@ -429,8 +429,8 @@ def slide_evaluate(c, n, total):
          "Intention is conveyed without faces,\n"
          "language, or scored music."),
         ("Scope.",
-         "Goal-directed individual action only —\n"
-         "no communication, no Bayesian inference."),
+         "One agent, one goal — no communication\n"
+         "and no real Bayesian inference, by design."),
     ]
 
     y = PAGE_H - 410
