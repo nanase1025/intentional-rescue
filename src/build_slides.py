@@ -356,7 +356,7 @@ def slide_two_layers(c, n, total):
         c.drawString(col_x, top_y - 58 - i * 44, line)
     c.setFillColor(DIM_INK)
     c.setFont(SERIF, 24)
-    c.drawString(col_x, top_y - 208, "Heider & Simmel 1944 · Dennett 1971.")
+    c.drawString(col_x, top_y - 208, "Dennett 1971.")
 
     top2 = top_y - 290
     c.setFillColor(FRIEND)
@@ -510,10 +510,6 @@ def slide_references(c, n, total):
         "Baker, Jara-Ettinger, Saxe & Tenenbaum.",
         "    Rational quantitative attribution of beliefs,",
         "    desires and percepts.  Nat. Hum. Behav. 1, 2017.",
-        "Heider & Simmel.  Apparent Behavior.",
-        "    Am. J. Psych. 57, 1944.",
-        "Epley, Waytz & Cacioppo.  On Seeing Human.",
-        "    Psych. Review 114, 2007.",
     ]
     y = PAGE_H - 400
     c.setFillColor(INK)
