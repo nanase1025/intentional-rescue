@@ -519,8 +519,8 @@ def slide_references(c, n, total):
 
     # thank-you
     c.setFillColor(DIM_INK)
-    c.setFont(SANS_MED, 22)
-    c.drawString(MARGIN_X, 160, "THANK YOU.")
+    c.setFont(SANS_MED, 44)
+    c.drawString(MARGIN_X, 180, "THANK YOU.")
 
 
 # ===========================================================================
