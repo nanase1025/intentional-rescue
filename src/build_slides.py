@@ -324,7 +324,7 @@ def slide_two_layers(c, n, total):
     _draw_running_header(c, "two readings", n, total)
 
     _title(c, "Two readings, side by side.", y=PAGE_H - 220, size=64)
-    _subtitle(c, "The viewer attributes; the chyron confirms.",
+    _subtitle(c, "Outside: what you see.  ·  Inside: what the agent holds.",
               y=PAGE_H - 275)
 
     # Frame with chyron visible — left side, evidence of what we mean
